@@ -1,4 +1,4 @@
-const { Telegraf } = require("telegraf");
+const { Telegraf, Markup } = require("telegraf");
 require("dotenv").config();
 const commandsList = require("./commands");
 
@@ -8,7 +8,20 @@ bot.start((ctx) => {
   ctx.reply(`Привет, ${name ? name : "User!"}!`);
 });
 bot.help((ctx) => ctx.reply(commandsList.commands));
-bot.hears("hi", (ctx) => ctx.reply("Hey there"));
+bot.command("schedule", (ctx) => {
+  ctx.replyWithHTML(
+    "<b>Расписание:</b>",
+    Markup.inlineKeyboard([
+      [Markup.button.callback("Понедельник", "btn1")],
+      [Markup.button.callback("Вторник", "btn1")],
+      [Markup.button.callback("Среда", "btn1")],
+      [Markup.button.callback("Четверг", "btn1")],
+      [Markup.button.callback("Пятница", "btn1")],
+      [Markup.button.callback("Суббота", "btn1")],
+    ])
+  );
+});
+
 bot.launch();
 
 // Enable graceful stop
