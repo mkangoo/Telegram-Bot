@@ -8,18 +8,23 @@ bot.start((ctx) => {
   ctx.reply(`Привет, ${name ? name : "User!"}!`);
 });
 bot.help((ctx) => ctx.reply(commandsList.commands));
+
 bot.command("schedule", (ctx) => {
-  ctx.replyWithHTML(
-    "<b>Расписание:</b>",
-    Markup.inlineKeyboard([
-      [Markup.button.callback("Понедельник", "btn1")],
-      [Markup.button.callback("Вторник", "btn1")],
-      [Markup.button.callback("Среда", "btn1")],
-      [Markup.button.callback("Четверг", "btn1")],
-      [Markup.button.callback("Пятница", "btn1")],
-      [Markup.button.callback("Суббота", "btn1")],
-    ])
-  );
+  try {
+    ctx.replyWithHTML(
+      "<b>Расписание:</b>",
+      Markup.inlineKeyboard([
+        [Markup.button.callback("Понедельник", "btn1")],
+        [Markup.button.callback("Вторник", "btn2")],
+        [Markup.button.callback("Среда", "btn3")],
+        [Markup.button.callback("Четверг", "btn4")],
+        [Markup.button.callback("Пятница", "btn5")],
+        [Markup.button.callback("Суббота", "btn6")],
+      ])
+    );
+  } catch (Error) {
+    console.error(Error);
+  }
 });
 
 bot.launch();
