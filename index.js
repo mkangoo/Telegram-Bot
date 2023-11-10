@@ -17,7 +17,7 @@ bot.help((ctx) => ctx.reply(commandList.commands));
 bot.command("schedule", async (ctx) => {
   try {
     await ctx.replyWithHTML(
-      "<b>Расписание:</b>",
+      "<b>Выберите день:</b>",
       Markup.inlineKeyboard([
         [Markup.button.callback("Понедельник", "btn1")],
         [Markup.button.callback("Вторник", "btn2")],
