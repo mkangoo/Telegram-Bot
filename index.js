@@ -2,7 +2,7 @@ const { Telegraf, Markup } = require("telegraf");
 require("dotenv").config();
 const commandList = require("./commands");
 const commonGreeting = require("./greetings");
-
+const buttonProcessing = require('./button')
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start((ctx) => {
@@ -50,12 +50,12 @@ function addActionBot(name, src, text) {
   });
 }
 
-addActionBot("btn1", "./img/1.jpg", commandList.text1);
-addActionBot("btn2", "./img/2.jpg", commandList.text2);
-addActionBot("btn3", false, commandList.text3);
-addActionBot("btn4", false, commandList.text4);
-addActionBot("btn5", false, commandList.text5);
-addActionBot("btn6", false, commandList.text6);
+addActionBot("btn1", "./img/1.jpg", buttonProcessing.text1);
+addActionBot("btn2", "./img/2.jpg", buttonProcessing.text2);
+addActionBot("btn3", false, buttonProcessing.text3);
+addActionBot("btn4", false, buttonProcessing.text4);
+addActionBot("btn5", false, buttonProcessing.text5);
+addActionBot("btn6", false, buttonProcessing.text6);
 
 bot.launch();
 
