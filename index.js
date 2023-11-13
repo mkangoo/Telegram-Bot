@@ -32,17 +32,17 @@ bot.command("schedule", async (ctx) => {
   }
 });
 
-function addActionBot(name, src, text) {
+function addActionBot(name, src, button) {
   bot.action(name, async (ctx) => {
     try {
       await ctx.answerCbQuery();
       if (src) {
         await ctx.replyWithPhoto(
           { source: src },
-          { caption: text, disable_web_page_preview: true }
+          { caption: button, disable_web_page_preview: true }
         );
       } else {
-        await ctx.replyWithHTML(text, { disable_web_page_preview: true });
+        await ctx.replyWithHTML(button, { disable_web_page_preview: true });
       }
     } catch (error) {
       console.error(error);
@@ -50,12 +50,12 @@ function addActionBot(name, src, text) {
   });
 }
 
-addActionBot("btn1", "./img/1.jpg", buttonProcessing.text1);
-addActionBot("btn2", "./img/2.jpg", buttonProcessing.text2);
-addActionBot("btn3", false, buttonProcessing.text3);
-addActionBot("btn4", false, buttonProcessing.text4);
-addActionBot("btn5", false, buttonProcessing.text5);
-addActionBot("btn6", false, buttonProcessing.text6);
+addActionBot("btn1", "./img/1.jpg", buttonProcessing.monday);
+addActionBot("btn2", "./img/2.jpg", buttonProcessing.tuesday);
+addActionBot("btn3", false, buttonProcessing.wensday);
+addActionBot("btn4", false, buttonProcessing.thursday);
+addActionBot("btn5", false, buttonProcessing.friday);
+addActionBot("btn6", false, buttonProcessing.saturday);
 
 bot.launch();
 
