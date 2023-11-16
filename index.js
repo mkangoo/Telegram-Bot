@@ -6,7 +6,7 @@ const commonGreeting = require("./greetings");
 const buttonProcessing = require("./button");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// Функция для определения текущей недели (четной или нечетной)
+// function even or odd week
 Date.prototype.getWeek = function () {
   const target = new Date(this.valueOf());
   const dayNr = (this.getDay() + 6) % 7;
@@ -45,6 +45,12 @@ bot.command("schedule", async (ctx) => {
     console.error(error);
   }
 });
+
+function getCurrentWeek() {
+  const currentDate = new Date();
+  const weekNumber = currentDate.getWeek();
+  return weekNumber % 2 === 0;
+}
 
 function addActionBot(name, button) {
   bot.action(name, async (ctx) => {
