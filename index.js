@@ -30,16 +30,20 @@ bot.help((ctx) => ctx.reply(commandList.commands));
 
 bot.command("schedule", async (ctx) => {
   try {
+    const isEvenWeek = getCurrentWeek();
+
+    const dayButtons = [
+      [Markup.button.callback("Понедельник",isEvenWeek ? "btnEven1" : "btnOdd1")],
+      [Markup.button.callback("Вторник", isEvenWeek ? "btnEven2" : "btnOdd2")],
+      [Markup.button.callback("Среда", isEvenWeek ? "btnEven3" : "btnOdd3")],
+      [Markup.button.callback("Четверг", isEvenWeek ? "btnEven4" : "btnOdd4")],
+      [Markup.button.callback("Пятница", isEvenWeek ? "btnEven5" : "btnOdd5")],
+      [Markup.button.callback("Суббота", isEvenWeek ? "btnEven6" : "btnOdd6")],
+    ];
+
     await ctx.replyWithHTML(
-      "<b>Выберите день:</b>",
-      Markup.inlineKeyboard([
-        [Markup.button.callback("Понедельник", "btn1")],
-        [Markup.button.callback("Вторник", "btn2")],
-        [Markup.button.callback("Среда", "btn3")],
-        [Markup.button.callback("Четверг", "btn4")],
-        [Markup.button.callback("Пятница", "btn5")],
-        [Markup.button.callback("Суббота", "btn6")],
-      ])
+      `<b>Выберите день:</b>`,
+      Markup.inlineKeyboard(dayButtons)
     );
   } catch (error) {
     console.error(error);
@@ -63,12 +67,12 @@ function addActionBot(name, button) {
   });
 }
 
-addActionBot("btn1", buttonProcessing.monday);
-addActionBot("btn2", buttonProcessing.tuesday);
-addActionBot("btn3", buttonProcessing.wensday);
-addActionBot("btn4", buttonProcessing.thursday);
-addActionBot("btn5", buttonProcessing.friday);
-addActionBot("btn6", buttonProcessing.saturday);
+addActionBot("btnEven1", buttonProcessing.monday);
+addActionBot("btnEven2", buttonProcessing.tuesday);
+addActionBot("btnEven3", buttonProcessing.wensday);
+addActionBot("btnEven4", buttonProcessing.thursday);
+addActionBot("btnEven5", buttonProcessing.friday);
+addActionBot("btnEven6", buttonProcessing.saturday);
 
 bot.launch();
 
