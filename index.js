@@ -2,7 +2,7 @@ const { Telegraf, Markup } = require("telegraf");
 require("dotenv").config();
 const commandList = require("./commands");
 const commonGreeting = require("./greetings");
-const buttonProcessing = require('./button')
+const buttonProcessing = require("./button");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start((ctx) => {
@@ -32,30 +32,23 @@ bot.command("schedule", async (ctx) => {
   }
 });
 
-function addActionBot(name, src, button) {
+function addActionBot(name, button) {
   bot.action(name, async (ctx) => {
     try {
       await ctx.answerCbQuery();
-      if (src) {
-        await ctx.replyWithPhoto(
-          { source: src },
-          { caption: button, disable_web_page_preview: true }
-        );
-      } else {
-        await ctx.replyWithHTML(button, { disable_web_page_preview: true });
-      }
+      await ctx.replyWithHTML(button, { disable_web_page_preview: true });
     } catch (error) {
       console.error(error);
     }
   });
 }
 
-addActionBot("btn1", "./img/1.jpg", buttonProcessing.monday);
-addActionBot("btn2", "./img/2.jpg", buttonProcessing.tuesday);
-addActionBot("btn3", false, buttonProcessing.wensday);
-addActionBot("btn4", false, buttonProcessing.thursday);
-addActionBot("btn5", false, buttonProcessing.friday);
-addActionBot("btn6", false, buttonProcessing.saturday);
+addActionBot("btn1", buttonProcessing.monday);
+addActionBot("btn2", buttonProcessing.tuesday);
+addActionBot("btn3", buttonProcessing.wensday);
+addActionBot("btn4", buttonProcessing.thursday);
+addActionBot("btn5", buttonProcessing.friday);
+addActionBot("btn6", buttonProcessing.saturday);
 
 bot.launch();
 
