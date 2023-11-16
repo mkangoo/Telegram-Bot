@@ -74,6 +74,13 @@ addActionBot("btnE4", buttonProcessing.thursday);
 addActionBot("btnE5", buttonProcessing.friday);
 addActionBot("btnE6", buttonProcessing.saturday);
 
+addActionBot("btnOdd1", buttonProcessing.oddMonday);
+addActionBot("btnOdd2", buttonProcessing.oddTuesday);
+addActionBot("btnOdd3", buttonProcessing.oddWednesday);
+addActionBot("btnOdd4", buttonProcessing.oddThursday);
+addActionBot("btnOdd5", buttonProcessing.oddFriday);
+addActionBot("btnOdd6", buttonProcessing.oddSaturday);
+
 bot.launch();
 
 // Enable graceful stop
