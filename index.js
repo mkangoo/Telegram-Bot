@@ -33,12 +33,12 @@ bot.command("schedule", async (ctx) => {
     const isEvenWeek = getCurrentWeek();
 
     const dayButtons = [
-      [Markup.button.callback("Понедельник",isEvenWeek ? "btnEven1" : "btnOdd1")],
-      [Markup.button.callback("Вторник", isEvenWeek ? "btnEven2" : "btnOdd2")],
-      [Markup.button.callback("Среда", isEvenWeek ? "btnEven3" : "btnOdd3")],
-      [Markup.button.callback("Четверг", isEvenWeek ? "btnEven4" : "btnOdd4")],
-      [Markup.button.callback("Пятница", isEvenWeek ? "btnEven5" : "btnOdd5")],
-      [Markup.button.callback("Суббота", isEvenWeek ? "btnEven6" : "btnOdd6")],
+      [Markup.button.callback("Понедельник", isEvenWeek ? "btnE1" : "btnOdd1")],
+      [Markup.button.callback("Вторник", isEvenWeek ? "btnE2" : "btnOdd2")],
+      [Markup.button.callback("Среда", isEvenWeek ? "btnE3" : "btnOdd3")],
+      [Markup.button.callback("Четверг", isEvenWeek ? "btnE4" : "btnOdd4")],
+      [Markup.button.callback("Пятница", isEvenWeek ? "btnE5" : "btnOdd5")],
+      [Markup.button.callback("Суббота", isEvenWeek ? "btnE6" : "btnOdd6")],
     ];
 
     await ctx.replyWithHTML(
@@ -67,12 +67,12 @@ function addActionBot(name, button) {
   });
 }
 
-addActionBot("btnEven1", buttonProcessing.monday);
-addActionBot("btnEven2", buttonProcessing.tuesday);
-addActionBot("btnEven3", buttonProcessing.wensday);
-addActionBot("btnEven4", buttonProcessing.thursday);
-addActionBot("btnEven5", buttonProcessing.friday);
-addActionBot("btnEven6", buttonProcessing.saturday);
+addActionBot("btnE1", buttonProcessing.monday);
+addActionBot("btnE2", buttonProcessing.tuesday);
+addActionBot("btnE3", buttonProcessing.wensday);
+addActionBot("btnE4", buttonProcessing.thursday);
+addActionBot("btnE5", buttonProcessing.friday);
+addActionBot("btnE6", buttonProcessing.saturday);
 
 bot.launch();
 
