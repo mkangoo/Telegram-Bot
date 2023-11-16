@@ -22,7 +22,7 @@ Date.prototype.getWeek = function () {
 bot.start((ctx) => {
   const name = ctx.message.from.first_name;
   const userGreeting = `Привет, ${name ? name : "User!"}!`;
-  const fullGreeting = `${userGreeting}\n\n${commonGreeting}`;
+  const fullGreeting = `${userGreeting}\n${commonGreeting}`;
   ctx.reply(fullGreeting);
 });
 
