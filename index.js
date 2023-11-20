@@ -4,20 +4,9 @@ require("dotenv").config();
 const commandList = require("./commands");
 const commonGreeting = require("./greetings");
 const buttonProcessing = require("./button");
+
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// function even or odd week
-Date.prototype.getWeek = function () {
-  const target = new Date(this.valueOf());
-  const dayNr = (this.getDay() + 6) % 7;
-  target.setDate(target.getDate() - dayNr + 3);
-  const firstThursday = target.valueOf();
-  target.setMonth(0, 1);
-  if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
-  }
-  return 1 + Math.ceil((firstThursday - target) / 604800000);
-};
 
 bot.start((ctx) => {
   const name = ctx.message.from.first_name;
@@ -30,10 +19,10 @@ bot.help((ctx) => ctx.reply(commandList.commands));
 
 bot.command("schedule", async (ctx) => {
   try {
-    const isEvenWeek = getCurrentWeek();
+    const isEvenWeek = new Date().getWeek() % 2 === 0;
 
     const dayButtons = [
-      [Markup.button.callback("Понедельник", isEvenWeek ? "btnE1" : "btnOdd1")],
+      [Markup.button.callback("Понедельник", 'mondayButton')],
       [Markup.button.callback("Вторник", isEvenWeek ? "btnE2" : "btnOdd2")],
       [Markup.button.callback("Среда", isEvenWeek ? "btnE3" : "btnOdd3")],
       [Markup.button.callback("Четверг", isEvenWeek ? "btnE4" : "btnOdd4")],
@@ -50,11 +39,6 @@ bot.command("schedule", async (ctx) => {
   }
 });
 
-function getCurrentWeek() {
-  const currentDate = new Date();
-  const weekNumber = currentDate.getWeek();
-  return weekNumber % 2 === 0;
-}
 
 function addActionBot(name, button) {
   bot.action(name, async (ctx) => {
@@ -67,14 +51,14 @@ function addActionBot(name, button) {
   });
 }
 
-addActionBot("btnE1", buttonProcessing.monday);
+addActionBot('mondayButton', buttonProcessing.schedule.monday.lessons)
+
 addActionBot("btnE2", buttonProcessing.tuesday);
 addActionBot("btnE3", buttonProcessing.wensday);
 addActionBot("btnE4", buttonProcessing.thursday);
 addActionBot("btnE5", buttonProcessing.friday);
 addActionBot("btnE6", buttonProcessing.saturday);
 
-addActionBot("btnOdd1", buttonProcessing.oddMonday);
 addActionBot("btnOdd2", buttonProcessing.oddTuesday);
 addActionBot("btnOdd3", buttonProcessing.oddWednesday);
 addActionBot("btnOdd4", buttonProcessing.oddThursday);
