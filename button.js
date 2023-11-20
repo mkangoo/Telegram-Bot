@@ -1,8 +1,8 @@
-const scheduleData = require('./data/events.js')
+const scheduleData = require('./data/events.js');
 // TODO: rewrite to ordinary function
-Date.prototype.getWeek = function () {
-  const target = new Date(this.valueOf());
-  const dayNr = (this.getDay() + 6) % 7;
+const getWeek = (date) => {
+  const target = new Date(date);
+  const dayNr = (date.getDay() + 6) % 7;
   target.setDate(target.getDate() - dayNr + 3);
   const firstThursday = target.valueOf();
   target.setMonth(0, 1);
@@ -12,24 +12,39 @@ Date.prototype.getWeek = function () {
   return 1 + Math.ceil((firstThursday - target) / 604800000);
 };
 
-const isWeekEven = (date) => date.getWeek() % 2 === 0;
-const isBelongsToCurrentWeek = (date) => date.getWeek() === new Date().getWeek();
+const isWeekEven = (date) => getWeek(date) % 2 === 0;
+const isBelongsToCurrentWeek = (date) => getWeek(date) === getWeek(new Date());
 // TODO: remove lessons from other years from datasets
-const isBelongsToCurrentYear = (date) => date.getFullYear() === new Date().getFullYear();
+const isBelongsToCurrentYear = (date) =>
+  date.getFullYear() === new Date().getFullYear();
 
 const isCurrentWeekEven = isWeekEven(new Date());
 
-const mondayLessons = scheduleData.filter(({ start }) => isBelongsToCurrentYear(new Date(start)) && isBelongsToCurrentWeek(new Date(start)) && new Date(start).getDay() === 1)
+const mondayLessons = scheduleData.filter(
+  ({ start }) =>
+    isBelongsToCurrentYear(new Date(start)) &&
+    isBelongsToCurrentWeek(new Date(start)) &&
+    new Date(start).getDay() === 1
+);
 
-const formatLessons = (day, lessons ) => lessons.map(({ start, end, title, /* description */ }) =>`${day}\n⏰ ${new Date(start)} — ${new Date(end)}\n${title}\n`).join('\n\n');
+const formatLessons = (day, lessons) =>
+  lessons
+    .map(
+      ({ start, end, title /* description */ }) =>
+        `${day}\n⏰ ${new Date(start)} — ${new Date(end)}\n${title}\n`
+    )
+    .join('\n\n');
 
 module.exports.schedule = {
   monday: {
-    lessons: formatLessons('Понедельник', isCurrentWeekEven
-      ? mondayLessons.filter((lesson) => isWeekEven(new Date(lesson)) )
-      : mondayLessons.filter((lesson) => !isWeekEven(new Date(lesson))))
+    lessons: formatLessons(
+      'Понедельник',
+      isCurrentWeekEven
+        ? mondayLessons.filter((lesson) => isWeekEven(new Date(lesson)))
+        : mondayLessons.filter((lesson) => !isWeekEven(new Date(lesson)))
+    )
   }
-}
+};
 
 const tuesday = `
 Вторник:
