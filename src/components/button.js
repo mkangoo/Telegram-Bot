@@ -1,50 +1,50 @@
-const scheduleData = require('./data/events.js');
+const scheduleData = require('./data/events.js')
 // TODO: rewrite to ordinary function
-const getWeek = (date) => {
-  const target = new Date(date);
-  const dayNr = (date.getDay() + 6) % 7;
-  target.setDate(target.getDate() - dayNr + 3);
-  const firstThursday = target.valueOf();
-  target.setMonth(0, 1);
+const getWeek = date => {
+  const target = new Date(date)
+  const dayNr = (date.getDay() + 6) % 7
+  target.setDate(target.getDate() - dayNr + 3)
+  const firstThursday = target.valueOf()
+  target.setMonth(0, 1)
   if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
+    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7))
   }
-  return 1 + Math.ceil((firstThursday - target) / 604800000);
-};
+  return 1 + Math.ceil((firstThursday - target) / 604800000)
+}
 
-const isWeekEven = (date) => getWeek(date) % 2 === 0;
-const isBelongsToCurrentWeek = (date) => getWeek(date) === getWeek(new Date());
+const isWeekEven = date => getWeek(date) % 2 === 0
+const isBelongsToCurrentWeek = date => getWeek(date) === getWeek(new Date())
 // TODO: remove lessons from other years from datasets
-const isBelongsToCurrentYear = (date) =>
-  date.getFullYear() === new Date().getFullYear();
+const isBelongsToCurrentYear = date =>
+  date.getFullYear() === new Date().getFullYear()
 
-const isCurrentWeekEven = isWeekEven(new Date());
+const isCurrentWeekEven = isWeekEven(new Date())
 
 const mondayLessons = scheduleData.filter(
   ({ start }) =>
     isBelongsToCurrentYear(new Date(start)) &&
     isBelongsToCurrentWeek(new Date(start)) &&
-    new Date(start).getDay() === 1
-);
+    new Date(start).getDay() === 1,
+)
 
 const formatLessons = (day, lessons) =>
   lessons
     .map(
       ({ start, end, title /* description */ }) =>
-        `${day}\n⏰ ${new Date(start)} — ${new Date(end)}\n${title}\n`
+        `${day}\n⏰ ${new Date(start)} — ${new Date(end)}\n${title}\n`,
     )
-    .join('\n\n');
+    .join('\n\n')
 
 module.exports.schedule = {
   monday: {
     lessons: formatLessons(
       'Понедельник',
       isCurrentWeekEven
-        ? mondayLessons.filter((lesson) => isWeekEven(new Date(lesson)))
-        : mondayLessons.filter((lesson) => !isWeekEven(new Date(lesson)))
-    )
-  }
-};
+        ? mondayLessons.filter(lesson => isWeekEven(new Date(lesson)))
+        : mondayLessons.filter(lesson => !isWeekEven(new Date(lesson))),
+    ),
+  },
+}
 
 const tuesday = `
 Вторник:
@@ -68,7 +68,7 @@ const tuesday = `
 Проектное обучение
 (2,4,6,8,10,12,14 н)
 У - 216
-`;
+`
 const wensday = `
 Среда:
 
@@ -104,7 +104,7 @@ const wensday = `
 (ПЗ 17 н)
 Береговская Т.А.
 ЛК - 402
-`;
+`
 const thursday = `
 Четверг:
 
@@ -129,7 +129,7 @@ const thursday = `
 (ПЗ 2-4 н)
 Дегтярева В.В
 ЛК - 108
-`;
+`
 const friday = `
 Пятница:
 
@@ -159,7 +159,7 @@ const friday = `
 (ЛЗ 4-16 н)
 Гришин В.Н.
 БЦ - 217
-`;
+`
 const saturday = `
 Суббота:
 
@@ -172,7 +172,7 @@ const saturday = `
 (ПЗ 1-12 н)
 Онищенко С.И.
 ЛК - 321
-`;
+`
 
 const oddMonday = `
 Понедельник:
@@ -198,7 +198,7 @@ const oddMonday = `
 (ПЗ 2-14 н)
 Курочкин Д.А.
 ЛК - 402
-`;
+`
 const oddTuesday = `
 Вторник:
 
@@ -216,7 +216,7 @@ const oddTuesday = `
 Проектное обучение
 (3,5,7,9,11,13,15 н)
 У - 216
-`;
+`
 const oddWensday = `
 Среда:
 
@@ -253,7 +253,7 @@ const oddWensday = `
 (ПЗ 17 н)
 Береговская Т.А.
 ЛК - 402
-`;
+`
 const oddThursday = `
 Четверг
 
@@ -278,7 +278,7 @@ const oddThursday = `
 (ПЗ 17 н)
 Береговская Т.А.
 ЛК - 108
-`;
+`
 const oddFriday = `
 Пятница:
 
@@ -299,7 +299,7 @@ const oddFriday = `
 (ПЗ 1-11 н)
 Зубаков Г.В.
 ЛК - 508
-`;
+`
 const oddSaturday = `
 Суббота:
 
@@ -312,17 +312,17 @@ const oddSaturday = `
 (ПЗ 1-12 н)
 Онищенко С.И.
 ЛК - 321
-`;
+`
 
-module.exports.tuesday = tuesday;
-module.exports.wensday = wensday;
-module.exports.thursday = thursday;
-module.exports.friday = friday;
-module.exports.saturday = saturday;
+module.exports.tuesday = tuesday
+module.exports.wensday = wensday
+module.exports.thursday = thursday
+module.exports.friday = friday
+module.exports.saturday = saturday
 
-module.exports.oddMonday = oddMonday;
-module.exports.oddTuesday = oddTuesday;
-module.exports.oddWensday = oddWensday;
-module.exports.oddThursday = oddThursday;
-module.exports.oddFriday = oddFriday;
-module.exports.oddSaturday = oddSaturday;
+module.exports.oddMonday = oddMonday
+module.exports.oddTuesday = oddTuesday
+module.exports.oddWensday = oddWensday
+module.exports.oddThursday = oddThursday
+module.exports.oddFriday = oddFriday
+module.exports.oddSaturday = oddSaturday
